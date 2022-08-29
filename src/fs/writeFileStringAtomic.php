@@ -3,7 +3,7 @@
 return function($file, $data) {
 	$dir_path = dirname($file);
 	$file_name = basename($file);
-	$random_identifier = $this->invoke("utils_randomIdentifier", 10);
+	$random_identifier = $this->invoke("util_randomIdentifier", 10);
 	$temp_file_name = "$random_identifier.tmp";
 
 	$tmp_path = "$dir_path/$temp_file_name";

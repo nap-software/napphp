@@ -9,7 +9,7 @@ return function($type) {
 		$tmp_paths = $this->storeGetKey("tmp_paths");
 	}
 
-	$random_identifier = $this->invoke("utils_randomIdentifier", 10);
+	$random_identifier = $this->invoke("util_randomIdentifier", 10);
 	$tmp_name = "$random_identifier.tmp";
 	$tmp_path = "$tmp_dir/$tmp_name";
 
