@@ -9,7 +9,7 @@ abstract class napphp {
 		}
 
 		return self::$_napphp->getInstance()->invoke(
-			$fn_name
+			$fn_name,
 			...$fn_args
 		);
 	}
