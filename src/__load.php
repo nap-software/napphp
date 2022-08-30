@@ -1,6 +1,16 @@
 <?php
 
+/**
+ * Return an anonymous class representing napphp.
+ * Usage:
+ * 
+ * $napphp = require "__load.php";
+ * 
+ * $napphp::util_randomIdentifier(10);
+ */
 if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
+
+	// define the class only *once* in a program's lifecycle
 	$GLOBALS["NAPSoftware_napphp"] = new class {
 		private $_warnings = [];
 		private $_store = [];
@@ -74,6 +84,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return self::invokeStatically($fn_name, $fn_args);
 		}
 	};
+
 }
 
 return $GLOBALS["NAPSoftware_napphp"];
