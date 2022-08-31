@@ -100,6 +100,14 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return self::$_instance;
 		}
 
+		static public function set($key, $value) {
+			return self::getInstance()->int_storeSetKey($key, $value);
+		}
+
+		static public function get($key) {
+			return self::getInstance()->int_storeGetKey($key);
+		}
+
 		static public function __callStatic($fn_name, $fn_args) {
 			return self::int_invokeStatic($fn_name, $fn_args);
 		}
