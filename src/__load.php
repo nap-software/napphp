@@ -21,12 +21,12 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		private $_store = [];
 
 		// used internally
-		public function raiseError($message) {
+		public function int_raiseError($message) {
 			throw new Exception("napphp: $message");
 		}
 
 		// used internally
-		public function storeSetKey($key, $value) {
+		public function int_storeSetKey($key, $value) {
 			$this->_store[$key] = $value;
 		}
 
@@ -41,7 +41,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 				return $this->_store[$key];
 			}
 
-			$this->raiseError(
+			$this->int_raiseError(
 				"Unknown store key '$key'."
 			);
 		}
