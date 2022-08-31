@@ -9,7 +9,5 @@ return function($path) {
 
 	$link = readlink($path);
 
-	var_dump($link);
-
 	return $link;
 };
