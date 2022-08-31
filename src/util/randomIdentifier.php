@@ -1,7 +1,7 @@
 <?php
 
 return function($length) {
-	$random_bytes = $this->invoke("util_randomBytes", $length);
+	$random_bytes = $this->util_randomBytes($length);
 	$identifier = "";
 
 	for ($i = 0; $i < $length; ++$i) {

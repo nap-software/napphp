@@ -1,13 +1,13 @@
 <?php
 
 function napphp_proc_changeWorkingDirectoryCB($that, $path, $fn) {
-	$saved_cwd = $that->invoke("proc_getCurrentWorkingDirectory");
+	$saved_cwd = $that->proc_getCurrentWorkingDirectory();
 
 	try {
-		$that->invoke("proc_changeWorkingDirectory", $path);
+		$that->proc_changeWorkingDirectory($path);
 		$fn();
 	} finally {
-		$that->invoke("proc_changeWorkingDirectory", $saved_cwd);
+		$that->proc_changeWorkingDirectory($saved_cwd);
 	}
 }
 

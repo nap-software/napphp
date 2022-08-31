@@ -9,16 +9,16 @@ return function($type) {
 		$tmp_paths = $this->int_storeGetKey("tmp_paths");
 	}
 
-	$random_identifier = $this->invoke("util_randomIdentifier", 10);
+	$random_identifier = $this->util_randomIdentifier(10);
 	$tmp_name = "$random_identifier.tmp";
 	$tmp_path = "$tmp_dir/$tmp_name";
 
 	if ($type === "dir") {
-		$this->invoke("fs_mkdir", $tmp_path);
+		$this->fs_mkdir($tmp_path);
 	} else if ($type === "file") {
 		// use something else instead of "touch"
 		// touch updates filemtime when path exists
-		$this->invoke("fs_touch", $tmp_path);
+		$this->fs_touch($tmp_path);
 	} else {
 		$this->int_raiseError("Unkown type '$type'.");
 	}

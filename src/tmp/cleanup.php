@@ -9,7 +9,7 @@ return function() {
 	$this->int_storeSetKey("tmp_paths", []);
 
 	foreach ($tmp_paths as $tmp_path) {
-		$this->invoke("fs_delete", $tmp_path);
+		$this->fs_delete($tmp_path);
 	}
 
 	return sizeof($tmp_paths);

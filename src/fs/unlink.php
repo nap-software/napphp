@@ -2,7 +2,7 @@
 
 return function ($path, $silent = false) {
 	if (!unlink($path)) {
-		$path_exists = $this->invoke("fs_exists", $path);
+		$path_exists = $this->fs_exists($path);
 
 		// Only raise error IF $path still exists after deletion
 		if ($path_exists) {

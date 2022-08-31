@@ -9,7 +9,5 @@ return function($host, $username, $identity_file, $command) {
 
 	$ssh_command = "ssh $ssh_flags -i $ssh_identity_file $ssh_login -- $ssh_command 2>&1";
 
-	return $this->invoke(
-		"proc_exec", $ssh_command
-	);
+	return $this->proc_exec($ssh_command);
 };

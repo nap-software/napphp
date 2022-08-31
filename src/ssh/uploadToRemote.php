@@ -11,7 +11,5 @@ return function($host, $username, $identity_file, $local_file, $remote_path) {
 
 	$scp_command = "scp $scp_flags -i $scp_identity_file $scp_source $scp_destination 2>&1";
 
-	return $this->invoke(
-		"proc_exec", $scp_command
-	);
+	return $this->proc_exec($scp_command);
 };
