@@ -58,6 +58,10 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return self::invokeStatically($fn_name, $args);
 		}
 
+		public function __call($fn_name, $fn_args) {
+			return $this->invoke($fn_name, ...$fn_args);
+		}
+
 		/**
 		 *  ################################
 		 *  # Static variables and methods #
