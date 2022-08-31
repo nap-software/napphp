@@ -71,6 +71,15 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		static private $_loaded_functions = [];
 
 		// used internally
+		static public function int_getInstanceObject() {
+			if (!self::$_instance) {
+				self::$_instance = new self();
+			}
+
+			return self::$_instance;
+		}
+
+		// used internally
 		static public function int_invokeStatic($fn_name, $fn_args) {
 			$fn_bound = NULL;
 
@@ -92,20 +101,16 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return call_user_func_array($fn_bound, $fn_args);
 		}
 
-		static public function int_getInstanceObject() {
-			if (!self::$_instance) {
-				self::$_instance = new self();
-			}
-
-			return self::$_instance;
-		}
-
 		static public function set($key, $value) {
-			return self::int_getInstanceObject()->int_storeSetKey($key, $value);
+			$napphp_instance = self::int_getInstanceObject();
+
+			return $napphp_instance->int_storeSetKey($key, $value);
 		}
 
 		static public function get($key) {
-			return self::int_getInstanceObject()->int_storeGetKey($key);
+			$napphp_instance = self::int_getInstanceObject();
+
+			return $napphp_instance->int_storeGetKey($key);
 		}
 
 		static public function __callStatic($fn_name, $fn_args) {
