@@ -12,17 +12,30 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 
 	// define the class only *once* in a program's lifecycle
 	$GLOBALS["NAPSoftware_napphp"] = new class {
+		/**
+		 *  ##################################
+		 *  # Instance variables and methods #
+		 *  ##################################
+		 */
 		private $_warnings = [];
 		private $_store = [];
 
+		// used internally
+		public function raiseError($message) {
+			throw new Exception("napphp: $message");
+		}
+
+		// used internally
 		public function storeSetKey($key, $value) {
 			$this->_store[$key] = $value;
 		}
 
+		// used internally
 		public function storeKeyExists($key) {
 			return array_key_exists($key, $this->_store);
 		}
 
+		// used internally
 		public function storeGetKey($key) {
 			if ($this->storeKeyExists($key)) {
 				return $this->_store[$key];
@@ -37,10 +50,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			array_push($this->_warnings, $message);
 		}
 
-		public function raiseError($message) {
-			throw new Exception("napphp: $message");
-		}
-
+		// used internally
 		public function invoke() {
 			$args = func_get_args();
 			$fn_name = array_shift($args);
@@ -48,6 +58,11 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return self::invokeStatically($fn_name, $args);
 		}
 
+		/**
+		 *  ################################
+		 *  # Static variables and methods #
+		 *  ################################
+		 */
 		static private $_instance = NULL;
 		static private $_loaded_functions = [];
 
