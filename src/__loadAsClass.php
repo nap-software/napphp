@@ -3,7 +3,7 @@
 abstract class napphp {
 	static private $_napphp = NULL;
 
-	static private function int_getLoadedInstance() {
+	static public function int_getLoadedInstance() {
 		if (self::$_napphp === NULL) {
 			self::$_napphp = require __DIR__."/__load.php";
 		}
