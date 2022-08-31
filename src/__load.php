@@ -55,7 +55,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			$args = func_get_args();
 			$fn_name = array_shift($args);
 
-			return self::invokeStatically($fn_name, $args);
+			return self::int_invokeStatic($fn_name, $args);
 		}
 
 		public function __call($fn_name, $fn_args) {
@@ -70,15 +70,8 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		static private $_instance = NULL;
 		static private $_loaded_functions = [];
 
-		static public function getInstance() {
-			if (!self::$_instance) {
-				self::$_instance = new self();
-			}
-
-			return self::$_instance;
-		}
-
-		static public function invokeStatically($fn_name, $fn_args) {
+		// used internally
+		static public function int_invokeStatic($fn_name, $fn_args) {
 			$fn_bound = NULL;
 
 			if (array_key_exists($fn_name, self::$_loaded_functions)) {
@@ -99,8 +92,16 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return call_user_func_array($fn_bound, $fn_args);
 		}
 
+		static public function getInstance() {
+			if (!self::$_instance) {
+				self::$_instance = new self();
+			}
+
+			return self::$_instance;
+		}
+
 		static public function __callStatic($fn_name, $fn_args) {
-			return self::invokeStatically($fn_name, $fn_args);
+			return self::int_invokeStatic($fn_name, $fn_args);
 		}
 	};
 
