@@ -6,7 +6,7 @@ return function() {
 	}
 
 	$tmp_paths = $this->storeGetKey("tmp_paths");
-	$this->storeSetKey("tmp_paths", []);
+	$this->int_storeSetKey("tmp_paths", []);
 
 	foreach ($tmp_paths as $tmp_path) {
 		$this->invoke("fs_delete", $tmp_path);

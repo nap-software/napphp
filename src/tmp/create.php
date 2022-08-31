@@ -25,7 +25,7 @@ return function($type) {
 
 	array_push($tmp_paths, $tmp_path);
 
-	$this->storeSetKey("tmp_paths", $tmp_paths);
+	$this->int_storeSetKey("tmp_paths", $tmp_paths);
 
 	return $tmp_path;
 };
