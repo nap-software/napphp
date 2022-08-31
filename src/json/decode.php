@@ -1,7 +1,7 @@
 <?php
 
-return function($json) {
-	$data = json_decode($json, true);
+return function($json, $as_array = true) {
+	$data = json_decode($json, $as_array);
 
 	if (json_last_error() !== JSON_ERROR_NONE) {
 		$this->int_raiseError(
