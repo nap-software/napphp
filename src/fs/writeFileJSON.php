@@ -1,6 +1,6 @@
 <?php
 
-return function($file, $data) {
-	$json = $this->json_encode($data);
+return function($file, $data, $pretty_print = false) {
+	$json = $this->json_encode($data, $pretty_print);
 	$this->fs_writeFileString($file, $json);
 };
