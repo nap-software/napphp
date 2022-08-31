@@ -31,13 +31,13 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		}
 
 		// used internally
-		public function storeKeyExists($key) {
+		public function int_storeKeyExists($key) {
 			return array_key_exists($key, $this->_store);
 		}
 
 		// used internally
 		public function int_storeGetKey($key) {
-			if ($this->storeKeyExists($key)) {
+			if ($this->int_storeKeyExists($key)) {
 				return $this->_store[$key];
 			}
 

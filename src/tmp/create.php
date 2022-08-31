@@ -3,7 +3,7 @@
 return function($type) {
 	$tmp_dir = $this->int_storeGetKey("tmp_dir");
 
-	if (!$this->storeKeyExists("tmp_paths")) {
+	if (!$this->int_storeKeyExists("tmp_paths")) {
 		$tmp_paths = [];
 	} else {
 		$tmp_paths = $this->int_storeGetKey("tmp_paths");

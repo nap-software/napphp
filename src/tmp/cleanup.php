@@ -1,7 +1,7 @@
 <?php
 
 return function() {
-	if (!$this->storeKeyExists("tmp_paths")) {
+	if (!$this->int_storeKeyExists("tmp_paths")) {
 		return 0;
 	}
 
