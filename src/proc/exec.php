@@ -8,7 +8,7 @@ return function($command, $args = []) {
 	exec($full_command, $lines, $exit_code);
 
 	if ($exit_code !== 0) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to execute '$full_command'."
 		);
 	}

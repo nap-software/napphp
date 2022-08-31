@@ -8,7 +8,7 @@ return function($data, $pretty = false) {
 	}
 
 	if (json_last_error() !== JSON_ERROR_NONE) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to encode data to JSON: ".json_last_error_msg()."."
 		);
 	}

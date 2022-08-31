@@ -4,7 +4,7 @@ return function() {
 	$pwd = getcwd();
 
 	if (!$pwd) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to get current working directory."
 		);
 	}

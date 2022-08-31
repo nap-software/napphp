@@ -20,7 +20,7 @@ return function($type) {
 		// touch updates filemtime when path exists
 		$this->invoke("fs_touch", $tmp_path);
 	} else {
-		$this->raiseError("Unkown type '$type'.");
+		$this->int_raiseError("Unkown type '$type'.");
 	}
 
 	array_push($tmp_paths, $tmp_path);

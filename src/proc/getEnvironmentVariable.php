@@ -7,7 +7,7 @@ return function($env_name, $env_fallback = NULL) {
 		// only throw error if no fallback value
 		// was given
 		if ($env_fallback === NULL) {
-			$this->raiseError(
+			$this->int_raiseError(
 				"Failed to read environment variable '$env_name'."
 			);
 		}

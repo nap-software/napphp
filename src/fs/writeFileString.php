@@ -5,7 +5,7 @@ return function($file, $data) {
 	$bytes_written = file_put_contents($file, $data);
 
 	if ($data_length !== $bytes_written) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Impartial write operation (expected=$data_length,actual=$bytes_written)."
 		);
 	}

@@ -4,7 +4,7 @@ return function ($path) {
 	$realpath = realpath($path);
 
 	if (!$realpath) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to resolve '$path'."
 		);
 	}

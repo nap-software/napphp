@@ -2,7 +2,7 @@
 
 return function ($path) {
 	if (!touch($path)) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to touch '$path'."
 		);
 	}

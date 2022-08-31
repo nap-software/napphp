@@ -5,7 +5,7 @@ return function($length) {
 	$bytes_str = openssl_random_pseudo_bytes($length);
 
 	if (strlen($bytes_str) !== $length) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to create random bytes."
 		);
 	}

@@ -4,7 +4,7 @@ return function ($path) {
 	$entries = scandir($path);
 
 	if (!is_array($entries)) {
-		$this->raiseError(
+		$this->int_raiseError(
 			"Failed to scandir '$path'."
 		);
 	}

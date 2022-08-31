@@ -15,7 +15,7 @@ return function($path, $fn = NULL) {
 	// use chdir() when $fn is not passed
 	if (!$fn) {
 		if (!chdir($path)) {
-			$this->raiseError(
+			$this->int_raiseError(
 				"Failed to change working directory to '$path'."
 			);
 		}

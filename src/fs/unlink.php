@@ -9,7 +9,7 @@ return function ($path, $silent = false) {
 			// never raise error if $silent is set
 			if ($silent) return;
 
-			$this->raiseError(
+			$this->int_raiseError(
 				"Failed to remove '$path' (file)."
 			);
 		}
