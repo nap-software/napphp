@@ -1,12 +1,12 @@
 <?php
 
 return function($type) {
-	$tmp_dir = $this->storeGetKey("tmp_dir");
+	$tmp_dir = $this->int_storeGetKey("tmp_dir");
 
 	if (!$this->storeKeyExists("tmp_paths")) {
 		$tmp_paths = [];
 	} else {
-		$tmp_paths = $this->storeGetKey("tmp_paths");
+		$tmp_paths = $this->int_storeGetKey("tmp_paths");
 	}
 
 	$random_identifier = $this->invoke("util_randomIdentifier", 10);

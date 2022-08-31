@@ -5,7 +5,7 @@ return function() {
 		return 0;
 	}
 
-	$tmp_paths = $this->storeGetKey("tmp_paths");
+	$tmp_paths = $this->int_storeGetKey("tmp_paths");
 	$this->int_storeSetKey("tmp_paths", []);
 
 	foreach ($tmp_paths as $tmp_path) {

@@ -36,7 +36,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		}
 
 		// used internally
-		public function storeGetKey($key) {
+		public function int_storeGetKey($key) {
 			if ($this->storeKeyExists($key)) {
 				return $this->_store[$key];
 			}
