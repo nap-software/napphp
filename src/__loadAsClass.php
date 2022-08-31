@@ -11,14 +11,6 @@ abstract class napphp {
 		return self::getInstance()->int_storeGetKey($key);
 	}
 
-	static public function getInstance() {
-		if (self::$_napphp === NULL) {
-			self::$_napphp = require __DIR__."/__load.php";
-		}
-
-		return self::$_napphp->getInstance();
-	}
-
 	static public function __callStatic($fn_name, $fn_args) {
 		if (self::$_napphp === NULL) {
 			self::$_napphp = require __DIR__."/__load.php";
