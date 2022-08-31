@@ -1,15 +1,40 @@
 <?php
 
-function napphp_fs_scandirRecursive($that, $path, &$ret_entries = []) {
-	$entries = $that->invoke("fs_scandir", $path);
+function napphp_fs_scandirRecursive(
+	$that,
+	$path_to_scan,
+	$path_chain = [],
+	&$ret_entries = []
+) {
+	$entries = $that->invoke("fs_scandir", $path_to_scan);
 
 	foreach ($entries as $entry) {
-		$entry_path = "$path/$entry";
-
-		array_push($ret_entries, $entry_path);
+		$entry_path = "$path_to_scan/$entry";
+		$entry_path_chain = array_merge($path_chain, [$entry]);
+		$entry_path_type = "file";
 
 		if ($that->invoke("fs_isDirectory", $entry_path)) {
-			napphp_fs_scandirRecursive($that, $entry_path, $ret_entries);
+			$entry_path_type = "directory";
+		}
+
+		array_push(
+			$ret_entries,
+			[
+				"basename" => $entry,
+				"path" => $entry_path,
+				"relative_path" => $that->invoke("arr_join", $entry_path_chain, "/"),
+				"type" => $entry_path_type
+			]
+		);
+
+		# recurse if true directory
+		if ($entry_path_type === "directory") {
+			napphp_fs_scandirRecursive(
+				$that,
+				$entry_path,
+				$entry_path_chain,
+				$ret_entries
+			);
 		}
 	}
 
