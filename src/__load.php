@@ -84,7 +84,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 				}
 
 				$fn = require $fn_path;
-				$fn_bound = Closure::bind($fn, self::getInstance());
+				$fn_bound = Closure::bind($fn, self::int_getInstanceObject());
 
 				self::$_loaded_functions[$fn_name] = $fn_bound;
 			}
@@ -92,7 +92,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			return call_user_func_array($fn_bound, $fn_args);
 		}
 
-		static public function getInstance() {
+		static public function int_getInstanceObject() {
 			if (!self::$_instance) {
 				self::$_instance = new self();
 			}
@@ -101,11 +101,11 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		}
 
 		static public function set($key, $value) {
-			return self::getInstance()->int_storeSetKey($key, $value);
+			return self::int_getInstanceObject()->int_storeSetKey($key, $value);
 		}
 
 		static public function get($key) {
-			return self::getInstance()->int_storeGetKey($key);
+			return self::int_getInstanceObject()->int_storeGetKey($key);
 		}
 
 		static public function __callStatic($fn_name, $fn_args) {
