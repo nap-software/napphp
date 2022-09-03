@@ -1,5 +1,5 @@
 <?php
 
-return function($array) {
-	return implode("/", $array);
+return function($array, $glue) {
+	return implode($glue, $array);
 };
