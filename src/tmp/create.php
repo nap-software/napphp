@@ -1,6 +1,6 @@
 <?php
 
-return function($type) {
+return function($type, $file_extension = "") {
 	$tmp_dir = $this->int_storeGetKey("tmp_dir");
 
 	if (!$this->int_storeKeyExists("tmp_paths")) {
@@ -11,7 +11,7 @@ return function($type) {
 
 	$random_identifier = $this->util_randomIdentifier(10);
 	$tmp_name = "$random_identifier.tmp";
-	$tmp_path = "$tmp_dir/$tmp_name";
+	$tmp_path = "$tmp_dir/$tmp_name$file_extension";
 
 	if ($type === "dir") {
 		$this->fs_mkdir($tmp_path);
