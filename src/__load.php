@@ -120,10 +120,17 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 				self::$_loaded_functions[$fn_name] = $fn_bound;
 			}
 
-			# clear last php error when invoking any function
-			self::int_getInstanceObject()->int_clearLastPHPError();
+			$instance = self::int_getInstanceObject();
 
-			return call_user_func_array($fn_bound, $fn_args);
+			# clear last php error when invoking any library function
+			$instance->int_clearLastPHPError();
+
+			$result = call_user_func_array($fn_bound, $fn_args);
+
+			# clear last php error after invoking any library function
+			$instance->int_clearLastPHPError();
+
+			return $result;
 		}
 
 		static public function set($key, $value) {
