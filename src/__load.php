@@ -19,10 +19,32 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		 */
 		private $_warnings = [];
 		private $_store = [];
+		private $_last_php_error = NULL;
+
+		// used internally
+		public function int_clearLastPHPError() {
+			$this->_last_php_error = NULL;
+		}
+
+		// used internally
+		public function int_saveLastPHPError() {
+			$this->_last_php_error = error_get_last();
+		}
 
 		// used internally
 		public function int_raiseError($message) {
-			throw new Exception("napphp: $message");
+			$last_error_message = "";
+
+			if ($this->_last_php_error !== NULL) {
+				$last_error_message .= "\n\nInformation about last PHP error:\n\n";
+				$last_error_message .= "    message = ".$this->_last_php_error["message"]."\n";
+				$last_error_message .= "    file    = ".$this->_last_php_error["file"]."\n";
+				$last_error_message .= "    line    = ".$this->_last_php_error["line"]."\n\n";
+			}
+
+			throw new Exception(
+				"napphp: '$message'$last_error_message"
+			);
 		}
 
 		// used internally
@@ -97,6 +119,9 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 
 				self::$_loaded_functions[$fn_name] = $fn_bound;
 			}
+
+			# clear last php error when invoking any function
+			self::int_getInstanceObject()->int_clearLastPHPError();
 
 			return call_user_func_array($fn_bound, $fn_args);
 		}
