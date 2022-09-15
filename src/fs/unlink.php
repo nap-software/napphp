@@ -1,7 +1,9 @@
 <?php
 
 return function ($path, $silent = false) {
-	if (!unlink($path)) {
+	if (!@unlink($path)) {
+		$this->int_saveLastPHPError();
+
 		$path_exists = $this->fs_exists($path);
 
 		// Only raise error IF $path still exists after deletion

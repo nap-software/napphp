@@ -1,7 +1,9 @@
 <?php
 
 return function($src, $dst) {
-	if (!copy($src, $dst)) {
+	if (!@copy($src, $dst)) {
+		$this->int_saveLastPHPError();
+
 		$this->int_raiseError(
 			"Failed to copy '$src' to '$dst'"
 		);

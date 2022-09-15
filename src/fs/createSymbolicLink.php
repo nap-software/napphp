@@ -1,7 +1,9 @@
 <?php
 
 return function($dest, $target) {
-	if (!symlink($target, $dest)) {
+	if (!@symlink($target, $dest)) {
+		$this->int_saveLastPHPError();
+
 		// maybe add is_link() check after creation
 
 		$this->int_raiseError(

@@ -1,7 +1,8 @@
 <?php
 
 return function ($path) {
-	$entries = scandir($path);
+	$entries = @scandir($path);
+	$this->int_saveLastPHPError();
 
 	if (!is_array($entries)) {
 		$this->int_raiseError(
