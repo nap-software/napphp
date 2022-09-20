@@ -17,7 +17,6 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		 *  # Instance variables and methods #
 		 *  ##################################
 		 */
-		private $_warnings = [];
 		private $_store = [];
 		private $_last_php_error = NULL;
 
@@ -92,10 +91,6 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			}
 
 			$this->int_raiseWarning($message);
-		}
-
-		public function addWarning($message) {
-			array_push($this->_warnings, $message);
 		}
 
 		// used internally
