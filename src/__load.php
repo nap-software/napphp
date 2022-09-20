@@ -86,6 +86,22 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 
 			$this->int_print("$formatted_message\n");
 
+			$print_debug_backtrace = false;
+
+			if ($this->int_storeKeyExists("warning_print_trace")) {
+				$print_debug_backtrace = $this->int_storeGetKey("warning_print_trace");
+			}
+
+			if ($print_debug_backtrace) {
+				foreach (debug_backtrace(0) as $trace) {
+					$trace_file = str_pad($trace["file"].":".$trace["line"], 90, " ");
+
+					$this->int_print(
+						"     $trace_file".$trace["function"]." \n"
+					);
+				}
+			}
+
 			if (!$this->int_storeKeyExists("terminate_on_warning")) return;
 			if (!$this->int_storeGetKey("terminate_on_warning")) return;
 
