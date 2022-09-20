@@ -67,5 +67,17 @@ return function($command, $options = []) {
 		$this->fs_unlink($script_path);
 	}
 
-	return $exit_code;
+	if ($exit_code === 0) {
+		return 0;
+	}
+
+	$allow_non_zero_exit_code = $options["allow_non_zero_exit_code"] ?? false;
+
+	if ($allow_non_zero_exit_code) {
+		return $exit_code;
+	}
+
+	$this->int_raiseError(
+		"Command $escaped_command failed with exit code $exit_code."
+	);
 };
