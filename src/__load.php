@@ -68,6 +68,32 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			);
 		}
 
+		// used internally
+		public function int_raiseWarning($message) {
+			$lines = explode("\n", $message);
+			$formatted_lines = array_map(function($line) {
+				return "!!!! nap-software/napphp warning: $line";
+			}, $lines);
+			$formatted_message = implode("\n", $formatted_lines);
+
+			if (defined("STDERR")) {
+				fwrite(STDERR, "$formatted_message\n");
+			} else {
+				echo "$formatted_message\n";
+			}
+		}
+
+		// used internally
+		public function int_raiseDeprecationWarning($old_fn, $new_fn = NULL) {
+			$message = "This function ($old_fn) has been deprecated.\n";
+
+			if ($new_fn !== NULL) {
+				$message .= "Please use '$new_fn' instead.";
+			}
+
+			$this->int_raiseWarning($message);
+		}
+
 		public function addWarning($message) {
 			array_push($this->_warnings, $message);
 		}
