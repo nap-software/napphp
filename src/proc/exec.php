@@ -1,6 +1,8 @@
 <?php
 
 return function($command, $args = []) {
+	$this->int_raiseDeprecationWarning("proc_exec", "shell_execute");
+
 	$args = array_map("escapeshellarg", $args);
 	$args = implode(" ", $args);
 	$full_command = "$command $args";
