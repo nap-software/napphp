@@ -6,7 +6,12 @@ return function($command, $options = []) {
 		$this->arr_map($options["args"] ?? [], "escapeshellarg"), " "
 	);
 	$cwd = $options["cwd"] ?? $this->proc_getCurrentWorkingDirectory();
-	$full_command = "$escaped_command $escaped_command_args";
+	$full_command = "$escaped_command";
+
+	if (strlen($escaped_command_args)) {
+		$full_command .= " $escaped_command_args";
+	}
+
 	$local_env_variables = "";
 
 	if ($this->arr_keyExists($options, "env") && sizeof($options["env"])) {
@@ -47,6 +52,10 @@ return function($command, $options = []) {
 	$script  = "#!/bin/sh -e\n";
 	$script .= "cd ".escapeshellarg($cwd)."\n";
 	$script .= "$local_env_variables$full_command\n";
+
+	if (($options["_unitTest"] ?? false)) {
+		return $script;
+	}
 
 	$script_path = $this->tmp_createFile(".sh");
 
