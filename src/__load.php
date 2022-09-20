@@ -68,6 +68,15 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		}
 
 		// used internally
+		public function int_print($string) {
+			if (defined("STDERR")) {
+				fwrite(STDERR, $string);
+			} else {
+				echo $string;
+			}
+		}
+
+		// used internally
 		public function int_raiseWarning($message) {
 			$lines = explode("\n", $message);
 			$formatted_lines = array_map(function($line) {
@@ -75,11 +84,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			}, $lines);
 			$formatted_message = implode("\n", $formatted_lines);
 
-			if (defined("STDERR")) {
-				fwrite(STDERR, "$formatted_message\n");
-			} else {
-				echo "$formatted_message\n";
-			}
+			$this->int_print("$formatted_message\n");
 
 			if (!$this->int_storeKeyExists("terminate_on_warning")) return;
 			if (!$this->int_storeGetKey("terminate_on_warning")) return;
