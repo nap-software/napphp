@@ -165,3 +165,29 @@ STR;
 		$expected_script === $script_output
 	);
 });
+
+testing::case("should work (stdout=stderr redir, with args, cwd and env)", function() {
+	$script_output = napphp::shell_execute("ls", [
+		"_unitTest" => true,
+		"cwd" => "/tmp/",
+		"args" => [
+			"a", "b", "c"
+		],
+		"env" => [
+			"SOME_VARIABLE" => "SOME_VALUE"
+		],
+		"stdout" => "/tmp/output.log",
+		"stderr" => "/tmp/output.log",
+	]);
+
+	$expected_script = <<<STR
+#!/bin/sh -e
+cd '/tmp/'
+SOME_VARIABLE='SOME_VALUE' ls 'a' 'b' 'c' 1> '/tmp/output.log' 2>&1
+
+STR;
+
+	testing::assert(
+		$expected_script === $script_output
+	);
+});
