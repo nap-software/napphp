@@ -80,6 +80,11 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			} else {
 				echo "$formatted_message\n";
 			}
+
+			if (!$this->int_storeKeyExists("terminate_on_warning")) return;
+			if (!$this->int_storeGetKey("terminate_on_warning")) return;
+
+			exit(1);
 		}
 
 		// used internally
