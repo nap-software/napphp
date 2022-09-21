@@ -68,6 +68,8 @@ return function($command, $options = []) {
 		escapeshellcmd($script_path), $exit_code
 	);
 
+	clearstatcache();
+
 	$debug_moveTo = $options["_debug"]["moveTo"] ?? "";
 
 	if (strlen($debug_moveTo)) {
