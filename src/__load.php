@@ -197,6 +197,12 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		}
 	};
 
+	register_shutdown_function(function() {
+		$napphp = $GLOBALS["NAPSoftware_napphp"];
+
+		$napphp::tmp_cleanup();
+	});
+
 }
 
 return $GLOBALS["NAPSoftware_napphp"];
