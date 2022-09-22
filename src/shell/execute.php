@@ -60,7 +60,7 @@ return function($command, $options = []) {
 	$script_path = $this->tmp_createFile(".sh");
 
 	$this->fs_writeFileStringAtomic($script_path, $script);
-	$this->fs_setFileMode($script_path, 0744);
+	$this->fs_setFileMode($script_path, 0700);
 
 	$exit_code = 1;
 
