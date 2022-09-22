@@ -1,6 +1,6 @@
 <?php
 
-return function($type, $file_extension = "") {
+return function($type, $file_extension = "", $persistent = false) {
 	$tmp_dir = $this->int_storeGetKey("tmp_dir");
 
 	if (!$this->int_storeKeyExists("tmp_paths")) {
@@ -25,7 +25,9 @@ return function($type, $file_extension = "") {
 
 	array_push($tmp_paths, $tmp_path);
 
-	$this->int_storeSetKey("tmp_paths", $tmp_paths);
+	if ($persistent !== true) {
+		$this->int_storeSetKey("tmp_paths", $tmp_paths);
+	}
 
 	return $tmp_path;
 };

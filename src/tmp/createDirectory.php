@@ -1,5 +1,5 @@
 <?php
 
-return function() {
-	return $this->tmp_create("dir");
+return function($persistent = false) {
+	return $this->tmp_create("dir", "", $persistent);
 };
