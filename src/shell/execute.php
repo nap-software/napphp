@@ -1,5 +1,26 @@
 <?php
 
+/**
+ * Wrapper function to execute a program with or
+ * without a timeout.
+ * 
+ * Returns exit code or -9999 if timeout occurred.
+ */
+function napphp_shell_executeProgramWithTimeout(
+	$that, $script_path, $timeout_in_seconds
+) {
+	// use system() if program should not timeout
+	if (0 >= $timeout_in_seconds) {
+		$exit_code = 1;
+
+		system(escapeshellcmd($script_path), $exit_code);
+
+		return $exit_code;
+	}
+
+	$that->int_raiseError("Not implemented.");
+}
+
 return function($command, $options = []) {
 	$escaped_command = escapeshellcmd($command);
 	$escaped_command_args = $this->arr_join(
@@ -62,10 +83,8 @@ return function($command, $options = []) {
 	$this->fs_writeFileStringAtomic($script_path, $script);
 	$this->fs_setFileMode($script_path, 0700);
 
-	$exit_code = 1;
-
-	system(
-		escapeshellcmd($script_path), $exit_code
+	$exit_code = napphp_shell_executeProgramWithTimeout(
+		$this, $script_path, $options["timeout"] ?? 0
 	);
 
 	clearstatcache();
