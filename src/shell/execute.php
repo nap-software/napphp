@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * Function to ''kill'' a running program.
+ */
+function napphp_shell_killRunningProgram($prog_pid, $proc) {
+	proc_terminate($proc);
+	posix_kill($prog_pid, SIGKILL);
+}
+
+/**
  * Wrapper function to execute a program with or
  * without a timeout.
  * 
@@ -18,7 +26,52 @@ function napphp_shell_executeProgramWithTimeout(
 		return $exit_code;
 	}
 
-	$that->int_raiseError("Not implemented.");
+	$proc = proc_open(escapeshellcmd($script_path), [
+		/** use ''transparent'' execute just like system() **/
+		0 => STDIN,
+		1 => STDOUT,
+		2 => STDERR
+	], $pipes);
+
+	if (!is_resource($proc)) {
+		$that->int_raiseError("Failed to proc_open '$script_path'.");
+	}
+
+	$prog_pid      = -1;
+	$prog_exitcode = -1;
+	// Save start time to see when time's up...
+	$start         = $that->sys_getHRTime();
+	$max_time      = $timeout_in_seconds * 1000;
+
+	while (true) {
+		$elapsed_time = $that->sys_getHRTime() - $start;
+
+		if ($elapsed_time >= $max_time) {
+			$prog_exitcode = -9999;
+
+			napphp_shell_killRunningProgram($prog_pid, $proc);
+
+			break;
+		}
+
+		$proc_status = proc_get_status($proc);
+
+		if ($prog_pid === -1) {
+			$prog_pid = $proc_status["pid"];
+		}
+
+		if (!$proc_status["running"]) {
+			$prog_exitcode = $proc_status["exitcode"];
+
+			break;
+		}
+
+		$that->sys_delay(500);
+	}
+
+	proc_close($proc);
+
+	return $prog_exitcode;
 }
 
 return function($command, $options = []) {
@@ -97,7 +150,15 @@ return function($command, $options = []) {
 		$this->fs_unlink($script_path);
 	}
 
-	if ($exit_code === 0) {
+	/**
+	 * never complain about a timeout because a user setting a timeout
+	 * is expected to handle a timeout event...
+	 */
+	if ($exit_code === 0 || $exit_code === -9999) {
+		if ($exit_code === -9999) {
+			return "timeout";
+		}
+
 		return 0;
 	}
 
