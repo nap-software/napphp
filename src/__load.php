@@ -213,4 +213,6 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 			"PHP-Error '$errstr' in file $errfile (line $errline)"
 		);
 	});
+
+	return $GLOBALS["NAPSoftware_napphp"];
 }
