@@ -73,7 +73,7 @@ if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 				fwrite(STDERR, $string);
 			} else {
 				echo $string;
-				ob_end_flush();
+				ob_flush();
 				flush();
 			}
 		}
