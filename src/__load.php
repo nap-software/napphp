@@ -77,6 +77,16 @@ if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 		}
 
 		// used internally
+		public function int_abort() {
+			// discard content that is in output buffers
+			while (ob_get_length()) {
+				ob_get_clean();
+			}
+
+			exit(1);
+		}
+
+		// used internally
 		public function int_raiseWarning($message) {
 			$lines = explode("\n", $message);
 			$formatted_lines = array_map(function($line) {
@@ -105,7 +115,7 @@ if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 			if (!$this->int_storeKeyExists("terminate_on_warning")) return;
 			if (!$this->int_storeGetKey("terminate_on_warning")) return;
 
-			exit(1);
+			$this->int_abort();
 		}
 
 		// used internally
