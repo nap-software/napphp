@@ -96,7 +96,7 @@ if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 			}, $lines);
 			$formatted_message = implode("\n", $formatted_lines);
 
-			$this->int_print("$formatted_message\n");
+			$message_to_be_printed = "$formatted_message\n";
 
 			$print_debug_backtrace = false;
 
@@ -108,10 +108,22 @@ if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 				foreach (debug_backtrace(0) as $trace) {
 					$trace_file = str_pad($trace["file"].":".$trace["line"], 90, " ");
 
-					$this->int_print(
-						"     $trace_file".$trace["function"]." \n"
-					);
+					$message_to_be_printed .= "     $trace_file".$trace["function"]." \n";
 				}
+			}
+
+			if (php_sapi_name() === "cli-server") {
+				$div_style  = "width:100%;height:100%;";
+				$div_style .= "position:absolute;top:0;left:0;z-index:99999999;";
+				$div_style .= "background: rgba(255, 0, 0, .4);color:white;font-size: 14px;padding:50px;";
+				$div_style .= "font-family: monospace;white-space: pre;";
+				$div_style .= "line-height: 30px;";
+
+				$this->int_print(
+					'<div style="'.$div_style.'">'.htmlspecialchars($message_to_be_printed).'</div>'
+				);
+			} else {
+				$this->int_print($message_to_be_printed);
 			}
 
 			if (!$this->int_storeKeyExists("terminate_on_warning")) return;
