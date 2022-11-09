@@ -8,10 +8,10 @@
  * 
  * $napphp::util_randomIdentifier(10);
  */
-if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
+if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 
 	// define the class only *once* in a program's lifecycle
-	$GLOBALS["NAPSoftware_napphp"] = new class {
+	$GLOBALS["NAPSoftware_napphp_class"] = new class {
 		/**
 		 *  ##################################
 		 *  # Instance variables and methods #
@@ -197,8 +197,10 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		}
 	};
 
+	$GLOBALS["NAPSoftware_napphp_instance"] = $GLOBALS["NAPSoftware_napphp_class"]::int_getInstanceObject();
+
 	register_shutdown_function(function() {
-		$napphp = $GLOBALS["NAPSoftware_napphp"];
+		$napphp = $GLOBALS["NAPSoftware_napphp_instance"];
 
 		$napphp::tmp_cleanup();
 	});
@@ -207,7 +209,7 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		// ignore errors that were silenced with '@'
 		if (error_reporting() === 0) return true;
 
-		$napphp = $GLOBALS["NAPSoftware_napphp"];
+		$napphp = $GLOBALS["NAPSoftware_napphp_instance"];
 
 		$napphp->int_raiseWarning(
 			"PHP-Error '$errstr' in file $errfile (line $errline)"
@@ -215,4 +217,4 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 	});
 }
 
-return $GLOBALS["NAPSoftware_napphp"];
+return $GLOBALS["NAPSoftware_napphp_instance"];
