@@ -217,7 +217,7 @@ if (!array_key_exists("NAPSoftware_napphp_class", $GLOBALS)) {
 
 	set_error_handler(function($errno, $errstr, $errfile, $errline) {
 		// ignore errors that were silenced with '@'
-		if (error_reporting() === 0) return true;
+		if (!(error_reporting() & $errno)) return true;
 
 		$napphp = $GLOBALS["NAPSoftware_napphp_instance"];
 
