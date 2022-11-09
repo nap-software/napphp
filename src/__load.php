@@ -203,6 +203,14 @@ if (!array_key_exists("NAPSoftware_napphp", $GLOBALS)) {
 		$napphp::tmp_cleanup();
 	});
 
-}
+	set_error_handler(function($errno, $errstr, $errfile, $errline) {
+		// ignore errors that were silenced with '@'
+		if (error_reporting() === 0) return true;
 
-return $GLOBALS["NAPSoftware_napphp"];
+		$napphp = $GLOBALS["NAPSoftware_napphp"];
+
+		$napphp->int_raiseWarning(
+			"PHP-Error '$errstr' in file $errfile (line $errline)"
+		);
+	});
+}
