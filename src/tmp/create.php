@@ -1,7 +1,7 @@
 <?php
 
 return function($type, $file_extension = "", $persistent = false) {
-	$tmp_dir = $this->int_storeGetKey("tmp_dir");
+	$tmp_dir = $persistent ? "/var/tmp/" : "/tmp/";
 
 	if (!$this->int_storeKeyExists("tmp_paths")) {
 		$tmp_paths = [];
