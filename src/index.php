@@ -1,4 +1,5 @@
 <?php
+declare(ticks=1);
 
 namespace napphp {
 	if (!class_exists("napphp\\Exception")) {
@@ -115,9 +116,11 @@ namespace {
 			}
 		}
 
-		register_shutdown_function(function() {
-			napphp::tmp_cleanup();
-		});
+		// clean up handlers
+		// it is safe to call tmp_cleanup() multiple times.
+		pcntl_signal(SIGTERM, function() { napphp::tmp_cleanup(); });
+		pcntl_signal(SIGINT, function() { napphp::tmp_cleanup(); });
+		register_shutdown_function(function() { napphp::tmp_cleanup(); });
 
 		set_error_handler(function($errno, $errstr, $errfile, $errline) {
 			// ignore errors that were silenced with '@'
