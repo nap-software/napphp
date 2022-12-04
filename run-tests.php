@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/src/__loadAsClass.php";
+require_once __DIR__."/src/index.php";
 
 class NAPSoftwareTestingAssertion extends Exception {
 	public function __construct($message) {
