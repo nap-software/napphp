@@ -64,6 +64,14 @@ namespace {
 				throw new napphp\Exception("$message$last_error_message");
 			}
 
+			public function import($file) {
+				return napphp::import($file);
+			}
+
+			public function importOnce($file) {
+				return napphp::importOnce($file);
+			}
+
 			public function __call($fn_name, $fn_args) {
 				return napphp::int_invokeStatic($fn_name, $fn_args);
 			}
@@ -113,6 +121,34 @@ namespace {
 
 			static public function __callStatic($fn_name, $fn_args) {
 				return self::int_invokeStatic($fn_name, $fn_args);
+			}
+
+			/**
+			 * Imports a file without leaking variables into the current scope.
+			 */
+			static private $_imported_files = [];
+
+			static public function import($file) {
+				$load_file = function($__napphp_file_to_import) {
+					return require $__napphp_file_to_import;
+				};
+
+				return $load_file($file);
+			}
+
+			static public function importOnce($file) {
+				// get the realpath so we can use it as a cache key
+				$realpath = realpath($file);
+
+				if ($realpath === false) {
+					throw new napphp\Exception("Unable to resolve path '$file'.");
+				}
+
+				if (!array_key_exists($realpath, self::$_imported_files)) {
+					self::$_imported_files[$realpath] = self::import($file);
+				}
+
+				return self::$_imported_files[$realpath];
 			}
 		}
 
