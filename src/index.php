@@ -150,6 +150,62 @@ namespace {
 
 				return self::$_imported_files[$realpath];
 			}
+
+			/**
+			 * Load an external library
+			 */
+			static private $_loaded_libraries = [];
+
+			static public function loadLibrary($path) {
+				// get the realpath so we can use it as a cache key
+				$realpath = realpath($path);
+
+				if ($realpath === false) {
+					throw new napphp\Exception("Unable to resolve path '$path'.");
+				}
+
+				if (!array_key_exists($realpath, self::$_loaded_libraries)) {
+					$library = [];
+
+					foreach (self::fs_scandir($path) as $entry) {
+						if (substr($entry, 0, 1) === ".") continue;
+						if (substr($entry, 0, 1) === "_") continue;
+						if (substr($entry, -4, 4) !== ".php") continue;
+
+						$library[
+							substr($entry, 0, strlen($entry) - 4)
+						] = self::import("$path/$entry");
+					}
+
+					$cls = new class() {
+						static private $_library = NULL;
+
+						static public function __napphpInitLibrary($library) {
+							if (self::$_library !== NULL) return;
+
+							self::$_library = $library;
+						}
+
+						static public function __callStatic($fn_name, $fn_args) {
+							if (!array_key_exists($fn_name, self::$_library)) {
+								throw new napphp\Exception(
+									"Unable to locate '$fn_name' in library object."
+								);
+							}
+
+							return call_user_func_array(
+								self::$_library[$fn_name], $fn_args
+							);
+						}
+					};
+
+					$cls::__napphpInitLibrary($library);
+
+					self::$_loaded_libraries[$realpath] = $cls;
+				}
+
+				return self::$_loaded_libraries[$realpath];
+			}
 		}
 
 		// clean up handlers
