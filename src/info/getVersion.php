@@ -1,5 +1,5 @@
 <?php
 
 return function() {
-	return "0.10.1";
+	return "0.20.0";
 };
